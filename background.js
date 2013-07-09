@@ -1,9 +1,5 @@
-var siteList = "";
-
-console.log("Background began");
-
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-		console.log("Background received message");
-		siteList += request.data + "<br>";
-});
+	function(request, sender, sendResponse) {
+		localStorage.siteList = localStorage.siteList != undefined ? localStorage.siteList + request.data + '<br>' : request.data + '<br>';
+	}
+);

@@ -1,1 +1,1 @@
-document.body.innerHTML = chrome.extension.getBackgroundPage().siteList;
+document.body.innerHTML = localStorage['siteList'];
