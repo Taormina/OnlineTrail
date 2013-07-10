@@ -1,6 +1,1 @@
-function Link(source, target) {
-	this.source = source;
-	this.target = target;
-}
-
-chrome.runtime.sendMessage({data:}, function(response) {});
+chrome.runtime.sendMessage({data:window.location.hostname}, function(response) {});
