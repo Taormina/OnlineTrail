@@ -3,7 +3,7 @@
 
   "name": "Virtual Trail",
   "description": "This extension tracks your online trail, allows you to view a visualization of your online history and shows you what websites are tracking you.",
-	"homepage_url": "virtualtrailways.weebly.com",
+	"homepage_url": "http://virtualtrailways.weebly.com",
   "version": "1.0",
 
   "permissions": [

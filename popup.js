@@ -8,11 +8,15 @@ function Link(data) {
 var links = [];
 var nodes = {};
 
-var rawData = localStorage.siteList;
+var rawData = localStorage.siteList.slice(0, -1);
 var splitData = rawData.split("\n");
 splitData.forEach(function(data) {
-
-	links.push(new Link(data));
+	var link = new Link(data);
+	if (data.indexOf("newtab") == 0) {
+		nodes[link.target] = {name: link.target};
+	} else {
+		links.push(link);
+	}
 });
 
 // Compute the distinct nodes from the links.
@@ -21,7 +25,6 @@ links.forEach(function(link) {
         (nodes[link.source] = {name: link.source});
     link.target = nodes[link.target] ||
         (nodes[link.target] = {name: link.target});
-    link.value = +link.value;
 });
 
 var width = 700,
