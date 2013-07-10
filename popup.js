@@ -1,39 +1,19 @@
-function Link(source, target) {
-	this.source = source;
-	this.target = target;
+function Link(data) {
+	var split = data.split(",");
+
+	this.source = split[0];
+	this.target = split[1];
 }
 
 var links = [];
-
-// get the data
-//d3.csv("force.csv", function(error, links) {
-links.push(new Link('Facebook', 'Google'));
-links.push(new Link('Buzzfeed', 'Reddit'));
-links.push(new Link('Pinterest', 'Reddit'));
-links.push(new Link('Imgur', 'Reddit'));
-links.push(new Link('Google', 'Reddit'));
-links.push(new Link('Twitter', 'Reddit'));
-links.push(new Link('Google', 'Google Images'));
-links.push(new Link('Reddit', 'Google'));
-links.push(new Link('Buzzfeed', 'Twitter'));
-links.push(new Link('Instagram', 'Twitter'));
-links.push(new Link('Tumblr', 'Twitter'));
-links.push(new Link('Facebook', 'Instagram'));
-links.push(new Link('Twitter', 'Instagram'));
-links.push(new Link('Reddit', 'Imgur'));
-links.push(new Link('LiveMeme', 'Imgur'));
-links.push(new Link('Reddit', 'Pinterest'));
-links.push(new Link('Facebook', 'Pinterest'));
-links.push(new Link('Pinterest', 'Facebook'));
-links.push(new Link('DegreeWorks', 'Buzzport'));
-links.push(new Link('Tsquare', 'Buzzport'));
-links.push(new Link('Twitter', 'Buzzfeed'));
-links.push(new Link('Reddit', 'Buzzfeed'));
-links.push(new Link('Twitter', 'Tumblr'));
-links.push(new Link('Imgur', 'LiveMeme'));
-
-
 var nodes = {};
+
+var rawData = localStorage.siteList;
+var splitData = rawData.split("\n");
+splitData.forEach(function(data) {
+
+	links.push(new Link(data));
+});
 
 // Compute the distinct nodes from the links.
 links.forEach(function(link) {
