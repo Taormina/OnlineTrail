@@ -1,8 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Online Trail",
-  "description": "This extension shows the user more information about what data is being tracked about them.",
+  "name": "Virtual Trail",
+  "description": "This extension tracks your online trail, allows you to view a visualization of your online history and shows you what websites are tracking you.",
+	"homepage_url": "virtualtrailways.weebly.com",
   "version": "1.0",
 
   "permissions": [
@@ -37,5 +38,4 @@
 		"48": "icon48.png",
 		"64": "icon64.png"
 	}
-
 }
