@@ -27,21 +27,15 @@ links.forEach(function(link) {
         (nodes[link.target] = {name: link.target});
 });
 
-var width = 700,
-    height = 400;
-
 var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
-    .size([width, height])
     .linkDistance(170)
     .charge(-500)
     .on("tick", tick)
     .start();
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height + 300);
+var svg = d3.select("body").append("svg");
 
 // build the arrow.
 svg.append("svg").append("defs").selectAll("marker")
