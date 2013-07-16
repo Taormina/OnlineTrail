@@ -5,6 +5,35 @@ function Link(data) {
 	this.target = split[1];
 }
 
+function numberOfCookies(cookieString) {
+	var num = 0;
+	var n = cookieString.search("_ga");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utma");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmb");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmc");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmz");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmv");
+	if (n > -1) {
+		num++;
+	} 
+	return num;
+}
+
 var links = [];
 var nodes = {};
 
