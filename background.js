@@ -4,15 +4,21 @@ function urlDomain(data) {
   return a.hostname;
 }
 
+function Link(s, t, c) {
+
+	this.source = s;
+	this.target = t;
+	this.cookie = c;
+}
+
+var siteList = [];
+
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (localStorage.lastActive != undefined) {
-			if (localStorage.siteList != undefined) {
-				localStorage.siteList += localStorage.lastActive;
-			} else {
-				localStorage.siteList = localStorage.lastActive;
-			}
- 			localStorage.siteList += "," + request.data + "," + request.cookie  + '\n';
+			var link = Link(localStorage.lastActive, request.data, request.cookie);
+			siteList.push(link);
+			localStorage.siteList = JSON.stringify(siteList);
 		}
 	}
 );

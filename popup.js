@@ -1,21 +1,37 @@
-function Link(data) {
-	var split = data.split(",");
-
-	this.source = split[0];
-	this.target = split[1];
-	this.cookie = split[2];
+function numberOfCookies(cookieString) {
+	var num = 0;
+	var n = cookieString.search("_ga");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utma");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmb");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmc");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmz");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmv");
+	if (n > -1) {
+		num++;
+	} 
+	return num;
 }
-
-function cookieValue(a) { return 5; }
 
 var links = [];
 var nodes = {};
 
-var rawData = localStorage.siteList.slice(0, -1);
-var splitData = rawData.split("\n");
-splitData.forEach(function(data) {
-	var link = new Link(data);
-	if (data.indexOf("newtab") == 0) {
+JSON.parse(String(localStorage.siteList)).forEach(function(link) {
+	if (link.source.index("newtab") == 0) {
 		nodes[link.target] = {name: link.target};
 	} else {
 		links.push(link);
@@ -25,9 +41,9 @@ splitData.forEach(function(data) {
 // Compute the distinct nodes from the links.
 links.forEach(function(link) {
     link.source = nodes[link.source] || 
-        (nodes[link.source] = {name: link.source, radius: cookieValue(link.cookie)});
+        (nodes[link.source] = {name: link.source, radius: numberOfCookies(link.cookie)});
     link.target = nodes[link.target] ||
-        (nodes[link.target] = {name: link.target, radius: cookieValue(link.cookie)});
+        (nodes[link.target] = {name: link.target, radius: numberOfCookies(link.cookie)});
 });
 
 var force = d3.layout.force()
@@ -71,7 +87,7 @@ var node = svg.selectAll(".node")
 
 // add the nodes
 node.append("circle")
-    .attr("r", function (d) { return d.radius; });
+    .attr("r", function (d) { return d.radius * 5; });
 
 // add the text 
 node.append("text")
