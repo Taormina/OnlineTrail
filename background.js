@@ -4,19 +4,13 @@ function urlDomain(data) {
   return a.hostname;
 }
 
-function Link(s, t, c) {
-
-	this.source = s;
-	this.target = t;
-	this.cookie = c;
-}
-
 var siteList = [];
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (localStorage.lastActive != undefined) {
-			var link = Link(localStorage.lastActive, request.data, request.cookie);
+			var link = {source: localStorage.lastActive, target: request.data, cookie: request.cookie};
+			console.log(link);
 			siteList.push(link);
 			localStorage.siteList = JSON.stringify(siteList);
 		}

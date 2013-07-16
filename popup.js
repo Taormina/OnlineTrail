@@ -31,7 +31,7 @@ var links = [];
 var nodes = {};
 
 JSON.parse(String(localStorage.siteList)).forEach(function(link) {
-	if (link.source.index("newtab") == 0) {
+	if (link.source.search("newtab") == 0) {
 		nodes[link.target] = {name: link.target};
 	} else {
 		links.push(link);
@@ -87,7 +87,7 @@ var node = svg.selectAll(".node")
 
 // add the nodes
 node.append("circle")
-    .attr("r", function (d) { return d.radius * 5; });
+    .attr("r", function (d) { return d.radius * 5 || 5; });
 
 // add the text 
 node.append("text")
