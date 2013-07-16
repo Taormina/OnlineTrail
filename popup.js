@@ -10,7 +10,34 @@ document.getElementById('reset').onclick = function() {
     $('svg').remove();
        
 }
-
+function numberOfCookies(cookieString) {
+	var num = 0;
+	var n = cookieString.search("_ga");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utma");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmb");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmc");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmz");
+	if (n > -1) {
+		num++;
+	} 
+	n = cookieString.search("__utmv");
+	if (n > -1) {
+		num++;
+	} 
+	return num;
+}
 
 var links = [];
 var nodes = {};
@@ -34,21 +61,15 @@ links.forEach(function(link) {
         (nodes[link.target] = {name: link.target});
 });
 
-var width = 700,
-    height = 400;
-
 var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
-    .size([width, height])
     .linkDistance(170)
     .charge(-500)
     .on("tick", tick)
     .start();
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height + 300);
+var svg = d3.select("body").append("svg");
 
 // build the arrow.
 svg.append("svg").append("defs").selectAll("marker")
