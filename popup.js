@@ -1,3 +1,15 @@
+function Link(data) {
+	var split = data.split(",");
+
+	this.source = split[0];
+	this.target = split[1];
+}
+
+document.getElementById('reset').onclick = function() {
+    localStorage.clear();
+    $('svg').remove();       
+}
+
 function numberOfCookies(cookieString) {
 	var num = 0;
 	var n = cookieString.search("_ga");
