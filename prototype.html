@@ -79,7 +79,7 @@ links.forEach(function(link) {
     link.value = +link.value;
 });
 
-var width = 960,
+var width = 1260,
     height = 500;
 
 var force = d3.layout.force()
@@ -87,12 +87,12 @@ var force = d3.layout.force()
     .links(links)
     .size([width, height])
     .linkDistance(60)
-    .charge(-300)
+    .charge(-500)
     .on("tick", tick)
     .start();
 
 var svg = d3.select("body").append("svg")
-    .attr("width", width + 380)
+    .attr("width", width + 80)
     .attr("height", height + 400)
     .attr("pointer-events", "all");
 
