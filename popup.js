@@ -3,7 +3,10 @@ function Link(data) {
 
 	this.source = split[0];
 	this.target = split[1];
+	this.cookie = split[2];
 }
+
+function cookieValue(a) { return 5; }
 
 var links = [];
 var nodes = {};
@@ -22,15 +25,15 @@ splitData.forEach(function(data) {
 // Compute the distinct nodes from the links.
 links.forEach(function(link) {
     link.source = nodes[link.source] || 
-        (nodes[link.source] = {name: link.source});
+        (nodes[link.source] = {name: link.source, radius: cookieValue(link.cookie)});
     link.target = nodes[link.target] ||
-        (nodes[link.target] = {name: link.target});
+        (nodes[link.target] = {name: link.target, radius: cookieValue(link.cookie)});
 });
 
 var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
-    .linkDistance(170)
+    .linkDistance(100)
     .charge(-500)
     .on("tick", tick)
     .start();
@@ -42,7 +45,7 @@ svg.append("svg").append("defs").selectAll("marker")
     .data(["end"])
   .enter().append("svg:marker")
     .attr("id", String)
-    .attr("viewBox", "0 -5 10 10")
+		.attr("viewBox", "0 -5 10 10")
     .attr("refX", 15)
     .attr("refY", -1.5)
     .attr("markerWidth", 6)
@@ -62,12 +65,13 @@ var path = svg.append("svg").append("g").selectAll("path")
 var node = svg.selectAll(".node")
     .data(force.nodes())
   .enter().append("g")
-    .attr("class", "node")
+    
+.attr("class", "node")
     .call(force.drag);
 
 // add the nodes
 node.append("circle")
-    .attr("r", 5);
+    .attr("r", function (d) { return d.radius; });
 
 // add the text 
 node.append("text")

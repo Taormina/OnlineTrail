@@ -8,10 +8,11 @@ chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (localStorage.lastActive != undefined) {
 			if (localStorage.siteList != undefined) {
-				localStorage.siteList += localStorage.lastActive + "," + request.data + '\n';
+				localStorage.siteList += localStorage.lastActive;
 			} else {
-				localStorage.siteList = localStorage.lastActive + "," + request.data + '\n';
+				localStorage.siteList = localStorage.lastActive;
 			}
+ 			localStorage.siteList += "," + request.data + "," + request.cookie  + '\n';
 		}
 	}
 );
