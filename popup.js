@@ -5,6 +5,13 @@ function Link(data) {
 	this.target = split[1];
 }
 
+document.getElementById('reset').onclick = function() {
+    localStorage.clear();
+    $('svg').remove();
+       
+}
+
+
 var links = [];
 var nodes = {};
 
