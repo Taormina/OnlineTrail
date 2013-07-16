@@ -93,12 +93,19 @@ var force = d3.layout.force()
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + 380)
-    .attr("height", height + 400);
+    .attr("height", height + 400)
+    .attr("pointer-events", "all");
 
+function redraw() {
+  console.log("here", d3.event.translate, d3.event.scale);
+  vis.attr("transform",
+      "translate(" + d3.event.translate + ")"
+      + " scale(" + d3.event.scale + ")");
+}
 // build the arrow.
 svg.append("svg:defs").selectAll("marker")
     .data(["end"])
-  .enter().append("svg:marker")
+  .enter().append("svg:marker").call(d3.behavior.zoom().on("zoom", redraw))
     .attr("id", String)
     .attr("viewBox", "0 -5 10 10")
     .attr("refX", 15)
@@ -125,7 +132,7 @@ var node = svg.selectAll(".node")
 
 // add the nodes
 node.append("circle")
-    .attr("r", 5);
+    .attr("r", 5);//function(d) { return (d.value)*100; });
 
 // add the text 
 node.append("text")
