@@ -58,15 +58,22 @@ links.forEach(function(link) {
         (nodes[link.target] = {name: link.target, radius: numberOfCookies(link.cookie)});
 });
 
+var width = 960,
+    height = 500;
+
 var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
+    .size([width, height])
     .linkDistance(100)
     .charge(-500)
     .on("tick", tick)
     .start();
 
-var svg = d3.select("body").append("svg");
+var svg = d3.select("body").append("svg")
+	.attr("width", width + 80)
+    .attr("height", height + 400)
+    .attr("pointer-events", "all");
 
 // build the arrow.
 svg.append("svg").append("defs").selectAll("marker")
