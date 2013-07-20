@@ -41,7 +41,7 @@ var links = [];
 var nodes = {};
 
 JSON.parse(String(localStorage.siteList)).forEach(function(link) {
-	if (link.source.search("newtab") == 0) {
+	if (link.source.search("newtab") == 0 || link.source == "") {
 		nodes[link.target] = {name: link.target};
 	} else {
 		links.push(link);
@@ -125,7 +125,7 @@ JSON.parse(String(localStorage.siteList)).forEach(function(link) {
 		}
 	}
 });
-
+console.log(links2, nodes2);
 // Compute the distinct nodes from the links.
 links2.forEach(function(link) {
     link.source = nodes[link.source] || 
