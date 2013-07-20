@@ -8,12 +8,13 @@ var siteList = [];
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-		if (localStorage.lastActive != undefined) {
+		if (request.reset == true) {
+			siteList = [];	
+		} else if (localStorage.lastActive != undefined) {
 			var link = {source: localStorage.lastActive, target: request.data, cookie: request.cookie};
-			console.log(link);
 			siteList.push(link);
-			localStorage.siteList = JSON.stringify(siteList);
 		}
+		localStorage.siteList = JSON.stringify(siteList);
 	}
 );
 

@@ -1,6 +1,11 @@
 document.getElementById('reset').onclick = function() {
-    localStorage.clear();
-    $('svg').remove();       
+	localStorage.clear();
+  $('svg').remove();
+	chrome.runtime.sendMessage({reset: true}, function(response) {});    
+	document.getElementById("reset-message").style.display = 'block';
+	document.getElementById("show-google").style.display = 'none';
+	document.getElementById("show-normal").style.display = 'none';
+	document.getElementById("reset").style.display = 'none';
 }
 
 function numberOfCookies(cookieString) {
@@ -123,9 +128,9 @@ JSON.parse(String(localStorage.siteList)).forEach(function(link) {
 
 // Compute the distinct nodes from the links.
 links2.forEach(function(link) {
-    link2.source = nodes[link.source] || 
+    link.source = nodes[link.source] || 
         (nodes2[link.source] = {name: link.source, radius: numberOfCookies(link.cookie)});
-    link2.target = nodes[link.target] ||
+    link.target = nodes[link.target] ||
         (nodes2[link.target] = {name: link.target, radius: numberOfCookies(link.cookie)});
 });
 
