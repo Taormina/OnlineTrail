@@ -34,6 +34,7 @@ function numberOfCookies(cookieString) {
 	if (n > -1) {
 		num++;
 	} 
+
 	return num;
 }
 
@@ -125,12 +126,12 @@ JSON.parse(String(localStorage.siteList)).forEach(function(link) {
 		}
 	}
 });
-console.log(links2, nodes2);
+
 // Compute the distinct nodes from the links.
 links2.forEach(function(link) {
-    link.source = nodes[link.source] || 
+    link.source = nodes2[link.source] || 
         (nodes2[link.source] = {name: link.source, radius: numberOfCookies(link.cookie)});
-    link.target = nodes[link.target] ||
+    link.target = nodes2[link.target] ||
         (nodes2[link.target] = {name: link.target, radius: numberOfCookies(link.cookie)});
 });
 

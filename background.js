@@ -20,6 +20,8 @@ chrome.runtime.onMessage.addListener(
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
 	chrome.tabs.get(activeInfo.tabId, function(tab) {
-		localStorage.lastActive = urlDomain(tab.url);
+		if (tab != undefined) {
+			localStorage.lastActive = urlDomain(tab.url);
+		}
 	});
 });
