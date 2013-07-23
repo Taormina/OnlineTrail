@@ -8,6 +8,8 @@ document.getElementById('reset').onclick = function() {
 	document.getElementById("reset").style.display = 'none';
 }
 
+document.getElementById('close').onclick = function() { window.close(); };
+
 function numberOfCookies(cookieString) {
 	var num = 0;
 	var n = cookieString.search("_ga");
