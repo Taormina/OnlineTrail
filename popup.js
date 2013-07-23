@@ -41,13 +41,15 @@ function numberOfCookies(cookieString) {
 var links = [];
 var nodes = {};
 
+
 JSON.parse(String(localStorage.siteList)).forEach(function(link) {
-	if (link.source.search("newtab") == 0 || link.source == "") {
-		nodes[link.target] = {name: link.target};
-	} else {
-		links.push(link);
-	}
+    if (link.source.search("newtab") == 0 || link.source == "") {
+        nodes[link.target] = {name: link.target};
+    } else {
+        links.push(link);
+    }
 });
+
 
 // Compute the distinct nodes from the links.
 links.forEach(function(link) {
@@ -60,7 +62,14 @@ links.forEach(function(link) {
 var width = 960,
     height = 500;
 
-var force = d3.layout.force()
+var svg = d3.select("body").append("svg")
+    .attr("width", width + 80)
+    .attr("height", height + 400)
+    .attr("pointer-events", "all")
+    .attr("id","all");
+
+
+    var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
     .size([width, height])
@@ -69,18 +78,14 @@ var force = d3.layout.force()
     .on("tick", tick)
     .start();
 
-var svg = d3.select("body").append("svg")
-	.attr("width", width + 80)
-    .attr("height", height + 400)
-    .attr("pointer-events", "all")
-    .attr("id","all");
+
 
 // build the arrow.
 svg.append("svg").append("defs").selectAll("marker")
     .data(["end"])
   .enter().append("svg:marker")
     .attr("id", String)
-		.attr("viewBox", "0 -5 10 10")
+        .attr("viewBox", "0 -5 10 10")
     .attr("refX", 15)
     .attr("refY", -1.5)
     .attr("markerWidth", 6)
@@ -114,19 +119,40 @@ node.append("text")
     .attr("dy", ".35em")
     .text(function(d) { return d.name; });
 
+// add the curvy lines
+function tick() {
+    path.attr("d", function(d) {
+        var dx = d.target.x - d.source.x,
+            dy = d.target.y - d.source.y,
+            dr = Math.sqrt(dx * dx + dy * dy);
+        return "M" + 
+            d.source.x + "," +  
+            d.source.y + "A" +
+            dr + "," + dr + " 0 0,1 " +
+            d.target.x + "," + 
+            d.target.y;
+    });
+
+    node
+        .attr("transform", function(d) { 
+            return "translate(" + d.x + "," + d.y + ")"; });
+};
+
+//the below code is for the nodes google can see
+
 var links2 = [];
 var nodes2 = {};
 
-JSON.parse(String(localStorage.siteList)).forEach(function(link) {
-	if (numberOfCookies(link.cookie) > 0) {
-		if (link.source.search("newtab") == 0 ) {
-			nodes2[link.target] = {name: link.target};
-		} else {
-			links2.push(link);
-		}
-	}
-});
 
+JSON.parse(String(localStorage.siteList)).forEach(function(link) {
+    if (numberOfCookies(link.cookie) > 0) {
+        if (link.source.search("newtab") == 0 ) {
+            nodes2[link.target] = {name: link.target};
+        } else {
+            links2.push(link);
+        }
+    }
+});
 // Compute the distinct nodes from the links.
 links2.forEach(function(link) {
     link.source = nodes2[link.source] || 
@@ -138,20 +164,22 @@ links2.forEach(function(link) {
 var width2 = 960,
     height2 = 500;
 
+var svg2 = d3.select("body").append("svg")
+    .attr("width", width + 80)
+    .attr("height", height + 400)
+    .attr("pointer-events", "all")
+    .attr("id","google");
+
 var force2 = d3.layout.force()
     .nodes(d3.values(nodes2))
     .links(links2)
     .size([width2, height2])
     .linkDistance(100)
     .charge(-500)
-    .on("tick", tick)
+    .on("tick", tick2)
     .start();
 
-var svg2 = d3.select("body").append("svg")
-	.attr("width", width2 + 80)
-    .attr("height", height2 + 400)
-    .attr("pointer-events", "all")
-    .attr("id","google");
+
 
 // build the arrow.
 svg2.append("svg").append("defs").selectAll("marker")
@@ -184,7 +212,7 @@ var node2 = svg2.selectAll(".node")
 
 // add the nodes
 node2.append("circle")
-    .attr("r", function (d) { return d.radius * 5; });
+    .attr("r", function (d) { return 5; });
 
 // add the text 
 node2.append("text")
@@ -194,7 +222,7 @@ node2.append("text")
 
 
 // add the curvy lines
-function tick() {
+function tick2() {
     path.attr("d", function(d) {
         var dx = d.target.x - d.source.x,
             dy = d.target.y - d.source.y,
@@ -207,10 +235,13 @@ function tick() {
             d.target.y;
     });
 
-    node
+    node2
         .attr("transform", function(d) { 
             return "translate(" + d.x + "," + d.y + ")"; });
 };
+
+
+
 
 document.getElementById('show-google').onclick = function() {
 	document.getElementById("google").style.display = 'block';
@@ -225,6 +256,7 @@ document.getElementById('show-normal').onclick = function normalSettings() {
 	document.getElementById("all").style.display = 'block';
 	document.getElementById("show-normal").style.display = 'none';
 }
+
 
 document.getElementById("google").style.display = 'none';
 document.getElementById("show-normal").style.display = 'none';
