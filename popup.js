@@ -4,9 +4,12 @@ document.getElementById('reset').onclick = function() {
 	chrome.runtime.sendMessage({reset: true}, function(response) {});    
 	document.getElementById("reset-message").style.display = 'block';
 	document.getElementById("show-google").style.display = 'none';
+    document.getElementById("show-bubble").style.display = 'none';
 	document.getElementById("show-normal").style.display = 'none';
 	document.getElementById("reset").style.display = 'none';
 }
+
+document.getElementById('close').onclick = function() { window.close(); };
 
 function numberOfCookies(cookieString) {
 	var num = 0;
@@ -248,6 +251,15 @@ document.getElementById('show-google').onclick = function() {
 	document.getElementById("show-google").style.display = 'none';
 	document.getElementById("all").style.display = 'none';
 	document.getElementById("show-normal").style.display = 'block';
+    document.getElementById("show-bubble").style.display = 'block';
+
+}
+
+document.getElementById('show-bubble').onclick = function() {
+	document.getElementById("google").style.display = 'block';
+	document.getElementById("show-google").style.display = 'block';
+	document.getElementById("all").style.display = 'none';
+	document.getElementById("show-normal").style.display = 'block';
 }
 
 document.getElementById('show-normal').onclick = function normalSettings() {
@@ -255,6 +267,8 @@ document.getElementById('show-normal').onclick = function normalSettings() {
 	document.getElementById("show-google").style.display = 'block';
 	document.getElementById("all").style.display = 'block';
 	document.getElementById("show-normal").style.display = 'none';
+    document.getElementById("show-bubble").style.display = 'block';
+
 }
 
 
