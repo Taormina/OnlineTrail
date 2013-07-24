@@ -226,7 +226,7 @@ node2.append("text")
 
 // add the curvy lines
 function tick2() {
-    path.attr("d", function(d) {
+    path2.attr("d", function(d) {
         var dx = d.target.x - d.source.x,
             dy = d.target.y - d.source.y,
             dr = Math.sqrt(dx * dx + dy * dy);
