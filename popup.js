@@ -226,7 +226,7 @@ node2.append("text")
 
 // add the curvy lines
 function tick2() {
-    path.attr("d", function(d) {
+    path2.attr("d", function(d) {
         var dx = d.target.x - d.source.x,
             dy = d.target.y - d.source.y,
             dr = Math.sqrt(dx * dx + dy * dy);
@@ -250,24 +250,25 @@ document.getElementById('show-google').onclick = function() {
 	document.getElementById("google").style.display = 'block';
 	document.getElementById("show-google").style.display = 'none';
 	document.getElementById("all").style.display = 'none';
-	document.getElementById("show-normal").style.display = 'block';
-    document.getElementById("show-bubble").style.display = 'block';
+	document.getElementById("show-normal").style.display = 'inline';
+    document.getElementById("show-bubble").style.display = 'inline';
 
 }
 
 document.getElementById('show-bubble').onclick = function() {
 	document.getElementById("google").style.display = 'block';
-	document.getElementById("show-google").style.display = 'block';
+	document.getElementById("show-google").style.display = 'inline';
 	document.getElementById("all").style.display = 'none';
-	document.getElementById("show-normal").style.display = 'block';
+	document.getElementById("show-normal").style.display = 'inline';
+    document.getElementById("show-bubble").style.display = 'none';
 }
 
 document.getElementById('show-normal').onclick = function normalSettings() {
 	document.getElementById("google").style.display = 'none';
-	document.getElementById("show-google").style.display = 'block';
+	document.getElementById("show-google").style.display = 'inline';
 	document.getElementById("all").style.display = 'block';
 	document.getElementById("show-normal").style.display = 'none';
-    document.getElementById("show-bubble").style.display = 'block';
+    document.getElementById("show-bubble").style.display = 'inline';
 
 }
 
