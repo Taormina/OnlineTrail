@@ -4,7 +4,7 @@ document.getElementById('reset').onclick = function() {
 	chrome.runtime.sendMessage({reset: true}, function(response) {});    
 	document.getElementById("reset-message").style.display = 'block';
 	document.getElementById("show-google").style.display = 'none';
-    document.getElementById("show-bubble").style.display = 'none';
+  document.getElementById("show-bubble").style.display = 'none';
 	document.getElementById("show-normal").style.display = 'none';
 	document.getElementById("reset").style.display = 'none';
 }
@@ -44,14 +44,14 @@ function numberOfCookies(cookieString) {
 var links = [];
 var nodes = {};
 
-
-JSON.parse(String(localStorage.siteList)).forEach(function(link) {
+chrome.storage.sync.get('siteList', function(result){
+	JSON.parse(String(result.siteList)).forEach(function(link) {
     if (link.source.search("newtab") == 0 || link.source == "") {
         nodes[link.target] = {name: link.target};
     } else {
         links.push(link);
     }
-});
+	});
 
 
 // Compute the distinct nodes from the links.
@@ -274,3 +274,4 @@ document.getElementById('show-normal').onclick = function normalSettings() {
 
 document.getElementById("google").style.display = 'none';
 document.getElementById("show-normal").style.display = 'none';
+});
