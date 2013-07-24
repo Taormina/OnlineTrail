@@ -9,13 +9,12 @@ var siteList = [];
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request.reset == true) {
-			console.log(siteList);
 			siteList = [];	
 		} else if (localStorage.lastActive != undefined) {
 			var link = {source: localStorage.lastActive, target: request.data, cookie: request.cookie};
 			siteList.push(link);
 		}
-		chrome.storage.sync.set({'siteList': JSON.stringify(siteList)});
+		localStorage.siteList = JSON.stringify(siteList);
 	}
 );
 

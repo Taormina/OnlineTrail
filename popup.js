@@ -43,8 +43,9 @@ function numberOfCookies(cookieString) {
 
 var links = [], nodes = [], visits = [];
 
-chrome.storage.sync.get('siteList', function(result){
-	JSON.parse(String(result.siteList)).forEach(function(link) {
+//chrome.storage.sync.get('siteList', function(result){
+var result = localStorage.siteList;	
+JSON.parse(String(result)).forEach(function(link) {
     if (link.source.search("newtab") == 0 || link.source == "") {
         nodes[link.target] = {name: link.target};
     } else {
@@ -244,25 +245,20 @@ function tick2() {
 };
 
 var freq = $("#frequency");
-var i = 0;
 
-var counts = [];
-visits.forEach(function () {
-	if (counts[this] == undefined) {
-		counts[this] = 0;
-	}
-	counts[this]++;
-	
+var a = [];
+   for(var i = 0; i < visits.length; i++){
+      if(a.indexOf(visits[i]) == -1) { 
+      	a.push(visits[i]);
+      }
+   }
 
-});
-
-console.log(counts);
-
-nodes.each(function () {
-	if (++i > 10) {
-		return false;
-	} 
-	freq.append("<div class=\"board\">" + (i + 1) + " - " + nodes[i].target + "</div>");
+a.forEach(function (value, index) {
+	var a = value, i = 12;
+	visits.forEach(function (value, index) {
+		if (a == value) i += 4;
+	});
+	freq.append("<div class=\"board\" style=\"font-size:" + i  + "px;\">" + value + "</div>");
 });
 
 
@@ -272,11 +268,13 @@ document.getElementById('show-google').onclick = function() {
 	document.getElementById("all").style.display = 'none';
 	document.getElementById("show-normal").style.display = 'inline';
     document.getElementById("show-bubble").style.display = 'inline';
+	document.getElementById("frequency").style.display = 'none';
 
 }
 
 document.getElementById('show-bubble').onclick = function() {
-	document.getElementById("google").style.display = 'block';
+	document.getElementById("frequency").style.display = 'inline';
+	document.getElementById("google").style.display = 'none';
 	document.getElementById("show-google").style.display = 'inline';
 	document.getElementById("all").style.display = 'none';
 	document.getElementById("show-normal").style.display = 'inline';
@@ -285,6 +283,7 @@ document.getElementById('show-bubble').onclick = function() {
 
 document.getElementById('show-normal').onclick = function normalSettings() {
 	document.getElementById("google").style.display = 'none';
+	document.getElementById("frequency").style.display = 'none';
 	document.getElementById("show-google").style.display = 'inline';
 	document.getElementById("all").style.display = 'block';
 	document.getElementById("show-normal").style.display = 'none';
@@ -293,6 +292,7 @@ document.getElementById('show-normal').onclick = function normalSettings() {
 }
 
 
+	document.getElementById("frequency").style.display = 'none';
 document.getElementById("google").style.display = 'none';
 document.getElementById("show-normal").style.display = 'none';
-});
+//});
