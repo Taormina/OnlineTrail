@@ -41,8 +41,7 @@ function numberOfCookies(cookieString) {
 	return num;
 }
 
-var links = [];
-var nodes = {};
+var links = [], nodes = [], visits = [];
 
 chrome.storage.sync.get('siteList', function(result){
 	JSON.parse(String(result.siteList)).forEach(function(link) {
@@ -51,6 +50,7 @@ chrome.storage.sync.get('siteList', function(result){
     } else {
         links.push(link);
     }
+		visits.push(link.target);
 	});
 
 
@@ -243,7 +243,27 @@ function tick2() {
             return "translate(" + d.x + "," + d.y + ")"; });
 };
 
+var freq = $("#frequency");
+var i = 0;
 
+var counts = [];
+visits.forEach(function () {
+	if (counts[this] == undefined) {
+		counts[this] = 0;
+	}
+	counts[this]++;
+	
+
+});
+
+console.log(counts);
+
+nodes.each(function () {
+	if (++i > 10) {
+		return false;
+	} 
+	freq.append("<div class=\"board\">" + (i + 1) + " - " + nodes[i].target + "</div>");
+});
 
 
 document.getElementById('show-google').onclick = function() {
